@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Student Account</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #0f172a 0%,
+        #1e293b 30%,
+        #2563eb 70%,
+        #38bdf8 100%
+    );
+    overflow:hidden;
+}
+
+.card{
+    width:450px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:20px;
+    padding:30px;
+    color:white;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:25px;
+    color:rgba(255,255,255,0.8);
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-size:13px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    outline:none;
+}
+
+input::placeholder{
+    color:rgba(255,255,255,0.6);
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.msg{
+    text-align:center;
+    margin-top:15px;
+}
+
+.success{
+    color:#4ade80;
+}
+
+.error{
+    color:#f87171;
+}
+
+.login-link{
+    text-align:center;
+    margin-top:20px;
+}
+
+.login-link a{
+    color:white;
+    text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Create Account</h2>
+
+    <p class="subtitle">
+        Register as a Student
+    </p>
+
+    <div class="field">
+        <label>Student ID</label>
+        <input type="text" id="student_id" placeholder="CSE001">
+    </div>
+
+    <div class="field">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Sara Faria">
+    </div>
+
+    <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="sara@student.com">
+    </div>
+
+    <div class="field">
+        <label>Department</label>
+        <input type="text" id="department" placeholder="CSE">
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <input type="password" id="password" placeholder="Enter Password">
+    </div>
+
+    <button onclick="register()">
+        Create Account
+    </button>
+
+    <p id="msg" class="msg"></p>
+
+    <div class="login-link">
+        <a href="/student">Already have an account? Login</a>
+    </div>
+
+</div>
+
+<script>
+async function register() {
+
+    const student_id =
+    document.getElementById("student_id").value;
+
+    const name =
+    document.getElementById("name").value;
+
+    const email =
+    document.getElementById("email").value;
+
+    const department =
+    document.getElementById("department").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const msg =
+    document.getElementById("msg");
+
+    if (
+        !student_id ||
+        !name ||
+        !email ||
+        !department ||
+        !password
+    ) {
+
+        msg.className = "msg error";
+        msg.innerHTML = "Please fill all fields";
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    student_id: student_id,
+                    name: name,
+                    email: email,
+                    department: department,
+                    password: password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            msg.className = "msg success";
+            msg.innerHTML = data.message;
+
+            document.getElementById("student_id").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("department").value = "";
+            document.getElementById("password").value = "";
+
+        } else {
+
+            msg.className = "msg error";
+            msg.innerHTML = data.detail || "Registration Failed";
+        }
+
+    } catch (error) {
+
+        msg.className = "msg error";
+        msg.innerHTML = "Server Error";
+
+        console.log(error);
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Login</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b,
+        #2563eb,
+        #38bdf8
+    );
+}
+
+.card{
+    width:430px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    padding:35px;
+    color:white;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:rgba(255,255,255,0.8);
+    margin-bottom:25px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    outline:none;
+}
+
+input::placeholder{
+    color:rgba(255,255,255,0.6);
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
+    transition:.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.links{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+}
+
+.links a{
+    color:#bfdbfe;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.links a:hover{
+    color:white;
+    text-decoration:underline;
+}
+
+.msg{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        <i class="ti ti-chalkboard"></i>
+    </div>
+
+    <h2>Teacher Login</h2>
+
+    <p class="subtitle">
+        Sign in to continue
+    </p>
+
+    <div class="field">
+        <label>Teacher ID</label>
+        <input
+        type="text"
+        id="teacher_id"
+        placeholder="TCH001">
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <input
+        type="password"
+        id="password"
+        placeholder="Enter Password">
+    </div>
+
+    <button onclick="login()">
+        Login
+    </button>
+
+    <div class="links">
+        <a href="/teacher-forgot-password">
+            Forgot Password?
+        </a>
+
+        <a href="/teacher-register">
+            Create Account
+        </a>
+    </div>
+
+    <p id="msg" class="msg"></p>
+
+</div>
+
+<script>
+
+async function login(){
+
+    const teacher_id =
+    document.getElementById("teacher_id").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const msg =
+    document.getElementById("msg");
+
+    if(!teacher_id || !password){
+
+        msg.style.color = "#f87171";
+        msg.innerHTML = "Please fill all fields";
+        return;
+    }
+
+    msg.style.color = "#4ade80";
+    msg.innerHTML = "Login Successful";
+
+    console.log({
+        teacher_id,
+        password
+    });
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Login</title>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b,
+        #2563eb,
+        #38bdf8
+    );
+}
+
+.card{
+    width:430px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    padding:35px;
+    color:white;
+}
+
+.logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    text-align:center;
+    color:rgba(255,255,255,0.8);
+    margin-bottom:25px;
+}
+
+.field{
+    margin-bottom:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:6px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:rgba(255,255,255,0.15);
+    color:white;
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.links{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+}
+
+.links a{
+    color:#bfdbfe;
+    text-decoration:none;
+}
+
+.msg{
+    text-align:center;
+    margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="logo">
+        <i class="ti ti-users"></i>
+    </div>
+
+    <h2>Staff Login</h2>
+
+    <p class="subtitle">
+        Sign in to continue
+    </p>
+
+    <div class="field">
+        <label>Staff ID</label>
+        <input type="text"
+        id="staff_id"
+        placeholder="STF001">
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <input type="password"
+        id="password"
+        placeholder="Enter Password">
+    </div>
+
+    <button onclick="login()">
+        Login
+    </button>
+
+    <div class="links">
+        <a href="/staff-forgot-password">
+            Forgot Password?
+        </a>
+
+        <a href="/staff-register">
+            Create Account
+        </a>
+    </div>
+
+    <p id="msg" class="msg"></p>
+
+</div>
+
+<script>
+
+function login(){
+
+    const staff_id =
+    document.getElementById("staff_id").value;
+
+    const password =
+    document.getElementById("password").value;
+
+    const msg =
+    document.getElementById("msg");
+
+    if(!staff_id || !password){
+        msg.innerHTML = "Please fill all fields";
+        msg.style.color = "#f87171";
+        return;
+    }
+
+    msg.innerHTML = "Login Successful";
+    msg.style.color = "#4ade80";
+}
+
+</script>
+
+</body>
+</html>

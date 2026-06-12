@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Login</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background: linear-gradient(
+135deg,
+#0f172a 0%,
+#1e293b 30%,
+#2563eb 70%,
+#38bdf8 100%
+);
+overflow:hidden;
+position:relative;
+}
+
+.blob1{
+position:absolute;
+width:450px;
+height:450px;
+background:rgba(59,130,246,.35);
+border-radius:50%;
+top:-150px;
+left:-120px;
+filter:blur(80px);
+}
+
+.blob2{
+position:absolute;
+width:350px;
+height:350px;
+background:rgba(14,165,233,.35);
+border-radius:50%;
+bottom:-120px;
+right:-100px;
+filter:blur(80px);
+}
+
+.blob3{
+position:absolute;
+width:250px;
+height:250px;
+background:rgba(168,85,247,.30);
+border-radius:50%;
+bottom:80px;
+left:80px;
+filter:blur(80px);
+}
+
+.dots{
+position:absolute;
+inset:0;
+background-image:
+radial-gradient(
+circle,
+rgba(255,255,255,0.08) 1px,
+transparent 1px
+);
+background-size:28px 28px;
+}
+
+.brand{
+position:absolute;
+top:30px;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:8px;
+z-index:5;
+}
+
+.brand i{
+font-size:24px;
+}
+
+.card{
+width:390px;
+padding:35px;
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.2);
+border-radius:20px;
+z-index:2;
+box-shadow:0 8px 32px rgba(0,0,0,.2);
+}
+
+.badge{
+display:inline-flex;
+align-items:center;
+gap:5px;
+background:rgba(255,255,255,0.15);
+color:white;
+padding:6px 14px;
+border-radius:30px;
+font-size:11px;
+margin-bottom:20px;
+}
+
+.card-title{
+font-size:28px;
+font-weight:700;
+color:white;
+}
+
+.card-sub{
+color:rgba(255,255,255,.8);
+margin-top:5px;
+margin-bottom:25px;
+font-size:14px;
+}
+
+.field{
+margin-bottom:15px;
+}
+
+.field label{
+display:block;
+margin-bottom:6px;
+color:white;
+font-size:12px;
+font-weight:600;
+}
+
+.field-wrap{
+position:relative;
+}
+
+.prefix{
+position:absolute;
+left:12px;
+top:12px;
+color:#60a5fa;
+}
+
+.field-wrap input{
+width:100%;
+padding:12px 40px;
+border:none;
+outline:none;
+border-radius:10px;
+background:rgba(255,255,255,.15);
+color:white;
+}
+
+.field-wrap input::placeholder{
+color:rgba(255,255,255,.6);
+}
+
+.eye-btn{
+position:absolute;
+right:12px;
+top:10px;
+border:none;
+background:none;
+color:white;
+cursor:pointer;
+}
+
+.login-btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+}
+
+.login-btn:hover{
+background:#1d4ed8;
+}
+
+.msg{
+margin-top:15px;
+text-align:center;
+font-size:14px;
+}
+
+.success{
+color:#4ade80;
+}
+
+.error{
+color:#f87171;
+}
+
+.divider{
+margin:20px 0;
+border:none;
+border-top:1px solid rgba(255,255,255,.2);
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:20px;
+}
+
+.footer-links a{
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.footer-links a:hover{
+text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="blob3"></div>
+<div class="dots"></div>
+
+<div class="brand">
+<i class="ti ti-school"></i>
+Varsity Management System
+</div>
+
+<div class="card">
+
+<div class="badge">
+<i class="ti ti-shield-check"></i>
+Secure Login
+</div>
+
+<h2 class="card-title">Welcome Back</h2>
+
+<p class="card-sub">
+Login to access your student dashboard
+</p>
+
+<div class="field">
+<label>Email Address</label>
+
+<div class="field-wrap">
+<i class="ti ti-mail prefix"></i>
+
+<input
+type="email"
+id="email"
+placeholder="sara@student.com">
+</div>
+</div>
+
+<div class="field">
+<label>Password</label>
+
+<div class="field-wrap">
+<i class="ti ti-lock prefix"></i>
+
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
+
+<button
+type="button"
+class="eye-btn"
+onclick="togglePwd()">
+
+<i class="ti ti-eye" id="eye-icon"></i>
+
+</button>
+</div>
+</div>
+
+<button class="login-btn" onclick="login()">
+<i class="ti ti-login"></i>
+Sign In
+</button>
+
+<p class="msg" id="msg"></p>
+
+<hr class="divider">
+
+<div class="footer-links">
+<a href="#">Forgot Password?</a>
+
+<a href="/register">
+Create Account
+</a>
+</div>
+
+</div>
+
+<script>
+
+function togglePwd(){
+
+const password =
+document.getElementById("password");
+
+const eye =
+document.getElementById("eye-icon");
+
+if(password.type === "password"){
+password.type = "text";
+eye.className = "ti ti-eye-off";
+}
+else{
+password.type = "password";
+eye.className = "ti ti-eye";
+}
+}
+
+async function login(){
+
+const email =
+document.getElementById("email").value.trim();
+
+const password =
+document.getElementById("password").value.trim();
+
+const msg =
+document.getElementById("msg");
+
+if(email === "" || password === ""){
+msg.className = "msg error";
+msg.innerHTML = "Please fill all fields";
+return;
+}
+
+try{
+const response = await fetch(
+"/login",
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+email:email,
+password:password
+})
+}
+);
+
+const data = await response.json();
+
+if(response.ok){
+msg.className = "msg success";
+msg.innerHTML = data.message;
+
+setTimeout(()=>{
+window.location.href="/dashboard";
+},1000);
+}
+else{
+msg.className = "msg error";
+msg.innerHTML = data.detail || "Invalid Email or Password";
+}
+}
+catch(error){
+msg.className = "msg error";
+msg.innerHTML = "Server Error";
+console.log(error);
+}
+}
+
+document
+.getElementById("password")
+.addEventListener("keypress", function(e){
+
+if(e.key === "Enter"){
+login();
+}
+
+});
+
+</script>
+
+</body>
+</html>
