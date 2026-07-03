@@ -1,10 +1,10 @@
-from database.mongodb import mongodb
+from database.mongodb import get_collection, get_database, get_mongodb
 
-client = mongodb.client
+client = get_mongodb().client
 print("Databases:", client.list_database_names())
 
-db = mongodb.db
+db = get_database()
 print("Collections:", db.list_collection_names())
 
-students = mongodb.get_collection("students")
+students = get_collection("students")
 print("Count:", students.count_documents({}))
