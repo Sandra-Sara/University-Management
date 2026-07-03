@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException, status
 
-from database.mongodb import mongodb
+from database.mongodb import get_collection
 from models.user_factory import UserFactory
 
 router = APIRouter()
 
-students = mongodb.get_collection("students")
+students = get_collection("students")
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
