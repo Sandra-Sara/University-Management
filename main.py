@@ -2,7 +2,9 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from database.mongodb import mongodb
+from database.mongodb import get_mongodb
+from routers.academic import router as academic_router
+from routers.notice import router as notice_router
 from routers.student import router as student_router
 from routers.staff import router as staff_router
 from routers.teacher import router as teacher_router
@@ -21,11 +23,13 @@ app.add_middleware(
 app.include_router(student_router)
 app.include_router(staff_router)
 app.include_router(teacher_router)
+app.include_router(notice_router)
+app.include_router(academic_router)
 
 
 @app.on_event("shutdown")
 def shutdown_db_client():
-    mongodb.close()
+    get_mongodb().close()
 
 @app.get("/")
 def role_select_page():
@@ -40,6 +44,11 @@ def student_login_page():
 @app.get("/teacher")
 def teacher_login_page():
     return FileResponse("templates/teacher_login.html")
+
+
+@app.get("/teacher-dashboard")
+def teacher_dashboard_page():
+    return FileResponse("templates/teacher_dashboard.html")
 
 
 @app.get("/staff")
@@ -61,7 +70,6 @@ def teacher_register_page():
 def staff_register_page():
     return FileResponse("templates/staff_createaccount.html")
 
-# Optional dashboard test route
 @app.get("/dashboard")
 def dashboard():
-    return {"message": "Dashboard Working"}
+    return FileResponse("templates/student_dashboard.html")
