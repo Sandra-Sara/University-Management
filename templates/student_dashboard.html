@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f8fafc;
+    color:#0f172a;
+}
+
+.topbar{
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    background:#0f172a;
+    color:white;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+}
+
+.brand i{
+    font-size:24px;
+    color:#38bdf8;
+}
+
+.logout{
+    color:white;
+    text-decoration:none;
+    padding:9px 14px;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:8px;
+}
+
+.main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:32px 24px;
+}
+
+.welcome{
+    margin-bottom:24px;
+}
+
+.welcome h1{
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.welcome p{
+    color:#475569;
+}
+
+.student-switcher{
+    display:flex;
+    gap:10px;
+    align-items:flex-end;
+    margin-bottom:24px;
+    padding:16px;
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+}
+
+.student-switcher .field{
+    flex:1;
+}
+
+.student-switcher label{
+    display:block;
+    margin-bottom:6px;
+    color:#334155;
+    font-size:13px;
+    font-weight:700;
+}
+
+.student-switcher input{
+    width:100%;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    outline:none;
+}
+
+.student-switcher button{
+    padding:11px 16px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+}
+
+.student-switcher button:hover{
+    background:#1d4ed8;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+}
+
+.card{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:20px;
+    cursor:pointer;
+}
+
+.card:hover{
+    border-color:#2563eb;
+}
+
+.card i{
+    font-size:28px;
+    color:#2563eb;
+    margin-bottom:12px;
+}
+
+.card h3{
+    margin-bottom:6px;
+}
+
+.card p{
+    color:#64748b;
+    font-size:14px;
+}
+
+.dashboard-panel{
+    display:none;
+    margin-top:24px;
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:20px;
+}
+
+.dashboard-panel.active{
+    display:block;
+}
+
+.dashboard-panel h2{
+    margin-bottom:14px;
+}
+
+.panel-item{
+    border-top:1px solid #e2e8f0;
+    padding:14px 0;
+}
+
+.panel-item:first-of-type{
+    border-top:none;
+}
+
+.panel-item h3{
+    margin-bottom:6px;
+}
+
+.panel-item p{
+    color:#475569;
+    line-height:1.5;
+}
+
+.panel-meta{
+    margin-top:8px;
+    color:#64748b;
+    font-size:13px;
+}
+
+.empty{
+    color:#64748b;
+}
+
+.login-action{
+    display:inline-block;
+    margin-top:12px;
+    padding:9px 14px;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <i class="ti ti-school"></i>
+        Student Dashboard
+    </div>
+
+    <a class="logout" href="/student">Logout</a>
+</header>
+
+<main class="main">
+    <section class="welcome">
+        <h1>Welcome Back</h1>
+        <p>Your student dashboard is ready.</p>
+    </section>
+
+    <section class="student-switcher">
+        <div class="field">
+            <label>Student ID</label>
+            <input id="dashboard_student_id" type="text" placeholder="CSE001">
+        </div>
+
+        <button type="button" onclick="setActiveStudent()">
+            Load Updates
+        </button>
+    </section>
+
+    <section class="grid">
+        <div class="card" onclick="loadNotices()">
+            <i class="ti ti-bell"></i>
+            <h3>Notices</h3>
+            <p>View classroom notices and updates.</p>
+        </div>
+
+        <div class="card" onclick="loadCourses()">
+            <i class="ti ti-book"></i>
+            <h3>Courses</h3>
+            <p>Check your enrolled courses.</p>
+        </div>
+
+        <div class="card" onclick="loadGrades()">
+            <i class="ti ti-chart-bar"></i>
+            <h3>Grades</h3>
+            <p>Track your academic progress.</p>
+        </div>
+
+        <div class="card" onclick="loadAttendance()">
+            <i class="ti ti-calendar-check"></i>
+            <h3>Attendance</h3>
+            <p>Review attendance records.</p>
+        </div>
+    </section>
+
+    <section class="dashboard-panel" id="dashboard-panel">
+        <h2 id="panel-title">Classroom Notices</h2>
+        <div id="panel-list" class="empty">Loading...</div>
+    </section>
+</main>
+
+<script>
+let student = JSON.parse(localStorage.getItem("student") || "{}");
+
+updateStudentView();
+
+function updateStudentView(){
+    if(student.student_id){
+        document.getElementById("dashboard_student_id").value = student.student_id;
+    }
+
+    if(student.name){
+        document.querySelector(".welcome h1").innerHTML =
+        "Welcome Back, " + student.name;
+    }
+    else if(student.student_id){
+        document.querySelector(".welcome h1").innerHTML =
+        "Student Dashboard - " + student.student_id;
+    }
+}
+
+function setActiveStudent(){
+    const studentId =
+    document.getElementById("dashboard_student_id").value.trim();
+
+    const panel = document.getElementById("dashboard-panel");
+    const title = document.getElementById("panel-title");
+    const list = document.getElementById("panel-list");
+
+    if(!studentId){
+        panel.classList.add("active");
+        title.innerHTML = "Student Updates";
+        list.className = "empty";
+        list.innerHTML = "Enter your Student ID to load updates from the teacher dashboard.";
+        return;
+    }
+
+    student = {
+        ...student,
+        student_id: studentId
+    };
+
+    localStorage.setItem("student", JSON.stringify(student));
+    updateStudentView();
+
+    panel.classList.add("active");
+    title.innerHTML = "Student Updates";
+    list.className = "empty";
+    list.innerHTML = "Student selected. Click Notices, Courses, Grades, or Attendance to view updates.";
+}
+
+function getActiveStudentId(){
+    return student.student_id ||
+    document.getElementById("dashboard_student_id").value.trim();
+}
+
+function showNoStudentSelected(list){
+    list.className = "empty";
+    list.innerHTML = "Enter your Student ID above, then click Load Updates.";
+}
+
+async function loadNotices(){
+    const panel = document.getElementById("dashboard-panel");
+    const title = document.getElementById("panel-title");
+    const list = document.getElementById("panel-list");
+
+    panel.classList.add("active");
+    title.innerHTML = "Classroom Notices";
+
+    const studentId = getActiveStudentId();
+
+    if(!studentId){
+        showNoStudentSelected(list);
+        return;
+    }
+
+    list.className = "empty";
+    list.innerHTML = "Loading notices...";
+
+    try{
+        const response = await fetch(
+            "/student-notifications/" + studentId
+        );
+
+        const data = await response.json();
+        const notifications = data.notifications || [];
+
+        if(!notifications.length){
+            list.className = "empty";
+            list.innerHTML = "No notices found for you yet.";
+            return;
+        }
+
+        list.className = "";
+        list.innerHTML = notifications.map((notice)=>{
+            const date = notice.created_at
+            ? new Date(notice.created_at).toLocaleString()
+            : "";
+
+            return `
+                <div class="panel-item">
+                    <h3>${notice.title}</h3>
+                    <p>${notice.message}</p>
+                    <div class="panel-meta">
+                        Department: ${notice.department || "N/A"} ${date ? "| " + date : ""}
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+    catch(error){
+        list.className = "empty";
+        list.innerHTML = "Could not load notices.";
+        console.log(error);
+    }
+}
+
+async function loadCourses(){
+    await loadStudentData(
+        "Courses",
+        "/student-courses/",
+        "courses",
+        "No courses found for you yet.",
+        (course)=>`
+            <div class="panel-item">
+                <h3>${course.course_code || "Course"}</h3>
+                <p>${course.course_name || "Unnamed course"}</p>
+                <div class="panel-meta">
+                    Teacher: ${course.teacher || "N/A"} | Semester: ${course.semester || "N/A"}
+                </div>
+            </div>
+        `
+    );
+}
+
+async function loadGrades(){
+    await loadStudentData(
+        "Grades",
+        "/student-grades/",
+        "grades",
+        "No grades found for you yet.",
+        (grade)=>`
+            <div class="panel-item">
+                <h3>${grade.course_code || "Course"}</h3>
+                <p>Grade: ${grade.grade || "N/A"}</p>
+                <div class="panel-meta">
+                    Marks: ${grade.marks || "N/A"} | Semester: ${grade.semester || "N/A"}
+                </div>
+            </div>
+        `
+    );
+}
+
+async function loadAttendance(){
+    await loadStudentData(
+        "Attendance",
+        "/student-attendance/",
+        "attendance",
+        "No attendance records found for you yet.",
+        (record)=>`
+            <div class="panel-item">
+                <h3>${record.course_code || "Course"}</h3>
+                <p>Status: ${record.status || "N/A"}</p>
+                <div class="panel-meta">
+                    Date: ${record.date || "N/A"}
+                </div>
+            </div>
+        `
+    );
+}
+
+async function loadStudentData(titleText, urlPrefix, responseKey, emptyMessage, renderItem){
+    const panel = document.getElementById("dashboard-panel");
+    const title = document.getElementById("panel-title");
+    const list = document.getElementById("panel-list");
+
+    panel.classList.add("active");
+    title.innerHTML = titleText;
+
+    const studentId = getActiveStudentId();
+
+    if(!studentId){
+        showNoStudentSelected(list);
+        return;
+    }
+
+    list.className = "empty";
+    list.innerHTML = "Loading " + titleText.toLowerCase() + "...";
+
+    try{
+        const response = await fetch(urlPrefix + studentId);
+        const data = await response.json();
+        const items = data[responseKey] || [];
+
+        if(!items.length){
+            list.className = "empty";
+            list.innerHTML = emptyMessage;
+            return;
+        }
+
+        list.className = "";
+        list.innerHTML = items.map(renderItem).join("");
+    }
+    catch(error){
+        list.className = "empty";
+        list.innerHTML = "Could not load " + titleText.toLowerCase() + ".";
+        console.log(error);
+    }
+}
+</script>
+
+</body>
+</html>

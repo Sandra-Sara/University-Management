@@ -200,13 +200,42 @@ async function login(){
         return;
     }
 
-    msg.style.color = "#4ade80";
-    msg.innerHTML = "Login Successful";
+    try{
+        const response = await fetch(
+            "/teacher-login",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+                    teacher_id,
+                    password
+                })
+            }
+        );
 
-    console.log({
-        teacher_id,
-        password
-    });
+        const data = await response.json();
+
+        if(response.ok){
+            msg.style.color = "#4ade80";
+            msg.innerHTML = data.message;
+            localStorage.setItem("teacher", JSON.stringify(data.teacher));
+
+            setTimeout(()=>{
+                window.location.href = "/teacher-dashboard";
+            },1000);
+        }
+        else{
+            msg.style.color = "#f87171";
+            msg.innerHTML = data.detail || "Invalid Teacher ID or Password";
+        }
+    }
+    catch(error){
+        msg.style.color = "#f87171";
+        msg.innerHTML = "Server Error";
+        console.error(error);
+    }
 }
 
 </script>

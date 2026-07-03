@@ -368,6 +368,7 @@ const data = await response.json();
 if(response.ok){
 msg.className = "msg success";
 msg.innerHTML = data.message;
+localStorage.setItem("student", JSON.stringify(data.student));
 
 setTimeout(()=>{
 window.location.href="/dashboard";

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f8fafc;
+    color:#0f172a;
+}
+
+.topbar{
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 28px;
+    background:#0f172a;
+    color:white;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:700;
+}
+
+.brand i{
+    color:#38bdf8;
+    font-size:24px;
+}
+
+.logout{
+    color:white;
+    text-decoration:none;
+    padding:9px 14px;
+    border:1px solid rgba(255,255,255,0.25);
+    border-radius:8px;
+}
+
+.main{
+    max-width:1100px;
+    margin:0 auto;
+    padding:32px 24px;
+}
+
+.welcome{
+    margin-bottom:24px;
+}
+
+.welcome h1{
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.welcome p{
+    color:#475569;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;
+}
+
+.panel{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:20px;
+}
+
+.panel h2{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:20px;
+    margin-bottom:16px;
+}
+
+.panel i{
+    color:#2563eb;
+}
+
+.field{
+    margin-bottom:12px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    color:#334155;
+    font-size:13px;
+    font-weight:700;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    outline:none;
+}
+
+textarea{
+    min-height:86px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    padding:11px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+    font-weight:700;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.msg{
+    min-height:20px;
+    margin-top:10px;
+    font-size:14px;
+}
+
+.success{
+    color:#16a34a;
+}
+
+.error{
+    color:#dc2626;
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <i class="ti ti-chalkboard"></i>
+        Teacher Dashboard
+    </div>
+
+    <a class="logout" href="/teacher">Logout</a>
+</header>
+
+<main class="main">
+    <section class="welcome">
+        <h1>Welcome Back</h1>
+        <p>Publish notices and update student academic records.</p>
+    </section>
+
+    <section class="grid">
+        <form class="panel" onsubmit="publishNotice(event)">
+            <h2><i class="ti ti-bell"></i>Publish Notice</h2>
+
+            <div class="field">
+                <label>Title</label>
+                <input id="notice_title" type="text" placeholder="Exam Notice">
+            </div>
+
+            <div class="field">
+                <label>Message</label>
+                <textarea id="notice_message" placeholder="Write notice message"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Department</label>
+                <input id="notice_department" type="text" placeholder="CSE">
+            </div>
+
+            <button type="submit">Publish Notice</button>
+            <p id="notice_msg" class="msg"></p>
+        </form>
+
+        <form class="panel" onsubmit="addCourse(event)">
+            <h2><i class="ti ti-book"></i>Add Course</h2>
+
+            <div class="field">
+                <label>Student ID</label>
+                <input id="course_student_id" type="text" placeholder="CSE001">
+            </div>
+
+            <div class="field">
+                <label>Course Code</label>
+                <input id="course_code" type="text" placeholder="CSE101">
+            </div>
+
+            <div class="field">
+                <label>Course Name</label>
+                <input id="course_name" type="text" placeholder="Introduction to Programming">
+            </div>
+
+            <div class="field">
+                <label>Semester</label>
+                <input id="course_semester" type="text" placeholder="Spring 2026">
+            </div>
+
+            <button type="submit">Add Course</button>
+            <p id="course_msg" class="msg"></p>
+        </form>
+
+        <form class="panel" onsubmit="addGrade(event)">
+            <h2><i class="ti ti-chart-bar"></i>Add Grade</h2>
+
+            <div class="field">
+                <label>Student ID</label>
+                <input id="grade_student_id" type="text" placeholder="CSE001">
+            </div>
+
+            <div class="field">
+                <label>Course Code</label>
+                <input id="grade_course_code" type="text" placeholder="CSE101">
+            </div>
+
+            <div class="field">
+                <label>Marks</label>
+                <input id="marks" type="number" placeholder="85">
+            </div>
+
+            <div class="field">
+                <label>Grade</label>
+                <input id="grade" type="text" placeholder="A">
+            </div>
+
+            <div class="field">
+                <label>Semester</label>
+                <input id="grade_semester" type="text" placeholder="Spring 2026">
+            </div>
+
+            <button type="submit">Add Grade</button>
+            <p id="grade_msg" class="msg"></p>
+        </form>
+
+        <form class="panel" onsubmit="addAttendance(event)">
+            <h2><i class="ti ti-calendar-check"></i>Add Attendance</h2>
+
+            <div class="field">
+                <label>Student ID</label>
+                <input id="attendance_student_id" type="text" placeholder="CSE001">
+            </div>
+
+            <div class="field">
+                <label>Course Code</label>
+                <input id="attendance_course_code" type="text" placeholder="CSE101">
+            </div>
+
+            <div class="field">
+                <label>Date</label>
+                <input id="attendance_date" type="date">
+            </div>
+
+            <div class="field">
+                <label>Status</label>
+                <select id="attendance_status">
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                </select>
+            </div>
+
+            <button type="submit">Add Attendance</button>
+            <p id="attendance_msg" class="msg"></p>
+        </form>
+    </section>
+</main>
+
+<script>
+const teacher = JSON.parse(localStorage.getItem("teacher") || "{}");
+
+if(teacher.name){
+    document.querySelector(".welcome h1").innerHTML =
+    "Welcome Back, " + teacher.name;
+}
+
+async function postData(url, body, msgId, successCallback){
+    const msg = document.getElementById(msgId);
+
+    try{
+        const response = await fetch(
+            url,
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(body)
+            }
+        );
+
+        const data = await response.json();
+
+        if(response.ok){
+            msg.className = "msg success";
+            msg.innerHTML = data.message;
+
+            if(successCallback){
+                successCallback();
+            }
+        }
+        else{
+            msg.className = "msg error";
+            msg.innerHTML = data.detail || "Action failed";
+        }
+    }
+    catch(error){
+        msg.className = "msg error";
+        msg.innerHTML = "Server Error";
+        console.error(error);
+    }
+}
+
+function publishNotice(event){
+    event.preventDefault();
+
+    postData(
+        "/notices",
+        {
+            title: document.getElementById("notice_title").value,
+            message: document.getElementById("notice_message").value,
+            department: document.getElementById("notice_department").value,
+            created_by: teacher.teacher_id || ""
+        },
+        "notice_msg",
+        ()=>{
+            document.getElementById("notice_title").value = "";
+            document.getElementById("notice_message").value = "";
+            document.getElementById("notice_department").value = "";
+        }
+    );
+}
+
+function addCourse(event){
+    event.preventDefault();
+
+    postData(
+        "/courses",
+        {
+            student_id: document.getElementById("course_student_id").value,
+            course_code: document.getElementById("course_code").value,
+            course_name: document.getElementById("course_name").value,
+            teacher: teacher.teacher_id || "",
+            semester: document.getElementById("course_semester").value
+        },
+        "course_msg",
+        ()=>event.target.reset()
+    );
+}
+
+function addGrade(event){
+    event.preventDefault();
+
+    postData(
+        "/grades",
+        {
+            student_id: document.getElementById("grade_student_id").value,
+            course_code: document.getElementById("grade_course_code").value,
+            marks: document.getElementById("marks").value,
+            grade: document.getElementById("grade").value,
+            semester: document.getElementById("grade_semester").value
+        },
+        "grade_msg",
+        ()=>event.target.reset()
+    );
+}
+
+function addAttendance(event){
+    event.preventDefault();
+
+    postData(
+        "/attendance",
+        {
+            student_id: document.getElementById("attendance_student_id").value,
+            course_code: document.getElementById("attendance_course_code").value,
+            date: document.getElementById("attendance_date").value,
+            status: document.getElementById("attendance_status").value
+        },
+        "attendance_msg",
+        ()=>event.target.reset()
+    );
+}
+</script>
+
+</body>
+</html>
